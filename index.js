@@ -43,12 +43,38 @@ app.get('/biodata/:id', (req, res, next) => {
         res.status(500).json({ error: "Terjadi kesalahan pada server atau database" });
     }
 });
+
+//POST
+app.post('/biodata', async (req, res, next) => {
+    try {
+        const { nama, nim, kelas } = req.body;
  
+        if (!nama || !nim || !kelas) {
+            return res.status(400).json({ message: "nama, nim, dan kelas wajib diisi" });
+        }
+ 
+        const result = await pool.query(
+            "INSERT INTO biodata (nama, nim, kelas) VALUES ($1, $2, $3) RETURNING *",
+            [nama, nim, kelas]
+        );
+ 
+        res.status(201).json({
+            message: "Berhasil menambahkan data biodata",
+            data: result.rows[0]
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "Terjadi kesalahan pada server atau database" });
+    }
+});
+
+//PUT
+
+
 app.listen(port, () => {
     console.log(`App running on port ${port}`);
 });
 
-//post
 
 //put
 
