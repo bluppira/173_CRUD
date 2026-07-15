@@ -33,5 +33,11 @@ app.get('/biodata', async (req, res) => {
 });
  
 app.listen(port, () => {
-    console.log(`Server berjalan di http://localhost:${port}`);
+    console.log(`App running on port ${port}`);
 });
+
+//post
+
+//put
+
+//delete
